@@ -1,6 +1,5 @@
 const apiKey = "049980ce88447ba2a5760c6844c0482d";
 const weatherApiUrl = "api.openweathermap.org/data/2.5/forecast?id={city ID}&appid={API key}";
-// want to use both APIs, as the city one gives the lat and long for the weather one
 const searchBtn = document.querySelector("#searchBtn");
 
 // global variables
@@ -19,6 +18,7 @@ function citySearch() {
     })
     .then(function (data) {
       console.log(data);
+      // data goes in here, make a loop function or summin
     });
 }
 
