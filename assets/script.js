@@ -1,6 +1,7 @@
 const apiKey = "049980ce88447ba2a5760c6844c0482d";
-const weatherApiUrl = "api.openweathermap.org/data/2.5/forecast?id={city ID}&appid={API key}";
+const weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q={city name}&appid=049980ce88447ba2a5760c6844c0482d";
 const searchBtn = document.querySelector("#searchBtn");
+const pastSearches = document.querySelector("#pastSearches");
 
 // global variables
 // divs
