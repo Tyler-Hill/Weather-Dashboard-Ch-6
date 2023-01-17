@@ -17,10 +17,12 @@
     <!-- City search feature -->
     <div class="flex justify-evenly text-center">
         <div class="m-2 w-1/3 mx-auto">
+            <h2 class="text-lg font-bold p-2">Enter City:</h2>
             <form>
                 <input class="border-4 p-1" type="text" placeholder="Chicago" id="cityInput" />
                 <button id="searchBtn" class="border-4 p-1">Search</button>
             </form>
+            <p></p>
         </div>
         <!-- Last 10 searches -->
         <ul class="list-style:none" id="pastSearches"></ul>
@@ -40,8 +42,8 @@
             <!-- 5 day forecast cards -->
             <!-- weather conditions, temperature, humidity, wind speed -->
 
-            <div id="city-Cards" class="m-2 text-center p-2">
-                <div class="border-4 p-3 mx-auto">
+            <div id="city-Cards" class="flex flex-wrap m-2 gap-4 text-center p-2">
+                <div class="border-4 p-3 px-9 mx-auto">
                     <h2 id="city-Name" class="text-xl font-bold">City Name</h2>
                     <h4 id="city-Date" class="text-base">Date</h4>
                     <p id="city-Weather" class="">Weather Icon</p>
@@ -51,7 +53,7 @@
                         <h3 id="city-Humidity" class="text-base">Humidity</h3>
                     </div>
                 </div>
-                <div class="border-4 p-3 mx-auto">
+                <div class="border-4 p-3 px-9 mx-auto">
                     <h2 id="city-Name" class="text-xl font-bold">City Name</h2>
                     <h4 id="city-Date" class="text-base">Date</h4>
                     <p id="city-Weather" class="">Weather Icon</p>
@@ -61,7 +63,7 @@
                         <h3 id="city-Humidity" class="text-base">Humidity</h3>
                     </div>
                 </div>
-                <div class="border-4 p-3 mx-auto">
+                <div class="border-4 p-3 px-9 mx-auto">
                     <h2 id="city-Name" class="text-xl font-bold">City Name</h2>
                     <h4 id="city-Date" class="text-base">Date</h4>
                     <p id="city-Weather" class="">Weather Icon</p>
@@ -71,7 +73,7 @@
                         <h3 id="city-Humidity" class="text-base">Humidity</h3>
                     </div>
                 </div>
-                <div class="border-4 p-3 mx-auto">
+                <div class="border-4 p-3 px-9 mx-auto">
                     <h2 id="city-Name" class="text-xl font-bold">City Name</h2>
                     <h4 id="city-Date" class="text-base">Date</h4>
                     <p id="city-Weather" class="">Weather Icon</p>
@@ -81,7 +83,7 @@
                         <h3 id="city-Humidity" class="text-base">Humidity</h3>
                     </div>
                 </div>
-                <div class="border-4 p-3 mx-auto">
+                <div class="border-4 p-3 px-9 mx-auto">
                     <h2 id="city-Name" class="text-xl font-bold">City Name</h2>
                     <h4 id="city-Date" class="text-base">Date</h4>
                     <p id="city-Weather" class="">Weather Icon</p>
@@ -93,7 +95,8 @@
                 </div>
             </div>
         </div>
-        <script src="./assets/script.js"></script>
+    </div>
+    <script src="./assets/script.js"></script>
 </body>
 
 </html>
