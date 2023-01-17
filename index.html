@@ -18,7 +18,7 @@
     <div class="flex justify-evenly text-center">
         <div class="m-2 w-1/3 mx-auto">
             <h2 class="text-lg font-bold p-2">Enter City:</h2>
-            <form>
+            <form id="cityForm">
                 <input class="border-4 p-1" type="text" placeholder="Chicago" id="cityInput" />
                 <button id="searchBtn" class="border-4 p-1">Search</button>
             </form>
@@ -30,19 +30,19 @@
         <!-- Current city -->
         <div class="w-2/3">
             <div id="cityDiv" class="flex flex-col grid justify-items-center m-2 text-center border-4 p-3">
-                <h2 id="city-Name" class="text-3xl font-bold">City Name</h2>
-                <h4 id="city-Date" class="text-lg">Date</h4>
-                <p id="city-Weather" class="">Weather Icon</p>
+                <h2 id="city-Name" class="text-3xl font-bold"></h2>
+                <h4 id="city-Date" class="text-lg"></h4>
+                <img id="city-Weather" class=""></img>
                 <div class="grid gap-4 grid-cols-3 grid-rows-1 m-2">
-                    <h3 id="city-Temp" class="text-xl">Temperature</h3>
-                    <h3 id="city-Wind" class="text-xl">Wind</h3>
-                    <h3 id="city-Humidity" class="text-xl">Humidity</h3>
+                    <h3 id="city-Temp" class="text-xl"></h3>
+                    <h3 id="city-Wind" class="text-xl"></h3>
+                    <h3 id="city-Humidity" class="text-xl"></h3>
                 </div>
             </div>
             <!-- 5 day forecast cards -->
             <!-- weather conditions, temperature, humidity, wind speed -->
 
-            <div id="city-Cards" class="flex flex-wrap m-2 gap-4 text-center p-2">
+            <!-- <div id="city-Cards" class="flex flex-wrap m-2 gap-4 text-center p-2">
                 <div class="border-4 p-3 px-9 mx-auto">
                     <h2 id="city-Name" class="text-xl font-bold">City Name</h2>
                     <h4 id="city-Date" class="text-base">Date</h4>
@@ -93,7 +93,7 @@
                         <h3 id="city-Humidity" class="text-base">Humidity</h3>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="./assets/script.js"></script>
