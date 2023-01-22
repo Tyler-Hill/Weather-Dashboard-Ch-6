@@ -1,5 +1,8 @@
 const apiKey = "049980ce88447ba2a5760c6844c0482d";
 const weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=Chicago&units=imperial&appid=049980ce88447ba2a5760c6844c0482d";
+// const sixteenDayApi = "api.openweathermap.org/data/2.5/forecast/daily?q=Chicago&cnt=6&appid=049980ce88447ba2a5760c6844c0482d";
+const weatherApiImages = "https://openweathermap.org/img/wn/01d@2x.png";
+// make it look like this https://openweathermap.org/img/wn/${data.list[0].weather.icon}@2x.png
 const searchBtn = document.querySelector("#searchBtn");
 const pastSearches = document.querySelector("#pastSearches");
 const city_Div = document.querySelector("#city-Div");
@@ -21,6 +24,8 @@ function init() {
 
 function citySearch(event) {
   event.preventDefault();
+  let city = document.querySelector("#cityInput").value;
+  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=049980ce88447ba2a5760c6844c0482d`;
   fetch(weatherApiUrl)
     .then(function (response) {
       return response.json();
@@ -28,7 +33,12 @@ function citySearch(event) {
     .then(function (data) {
       console.log(data);
       city_Name.innerHTML = data.city.name;
-      city_Weather.innerHTML = data.list.weather.icon;
+      // city_Date.innerHTML =
+      let weatherImg = data.list[0].weather[0].icon;
+      city_Weather.setAttribute("src", `https://openweathermap.org/img/wn/${weatherImg}@2x.png`);
+      city_Temp.innerHTML = `Temperature: ${data.list[0].main.temp}°F`;
+      city_Wind.innerHTML = `Wind Speed: ${data.list[0].wind.speed} MPH`;
+      city_Humidity.innerHTML = `Humidity: ${data.list[0].main.humidity}%`;
 
       // City name date weather conditions, temperature, humidity, wind speed
       // data goes in here, make a loop function or summin
@@ -41,3 +51,5 @@ init();
 // search button event listener
 searchBtn.addEventListener("click", citySearch);
 // past search event listener
+
+// 86400 seconds in 24 hours
