@@ -1,8 +1,10 @@
 const apiKey = "049980ce88447ba2a5760c6844c0482d";
+// global variables
 const weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=Chicago&units=imperial&appid=049980ce88447ba2a5760c6844c0482d";
 // const sixteenDayApi = "api.openweathermap.org/data/2.5/forecast/daily?q=Chicago&cnt=6&appid=049980ce88447ba2a5760c6844c0482d";
 const weatherApiImages = "https://openweathermap.org/img/wn/01d@2x.png";
 // make it look like this https://openweathermap.org/img/wn/${data.list[0].weather.icon}@2x.png
+// divs
 const searchBtn = document.querySelector("#searchBtn");
 const pastSearches = document.querySelector("#pastSearches");
 const city_Div = document.querySelector("#city-Div");
@@ -12,9 +14,15 @@ const city_Weather = document.querySelector("#city-Weather");
 const city_Temp = document.querySelector("#city-Temp");
 const city_Wind = document.querySelector("#city-Wind");
 const city_Humidity = document.querySelector("#city-Humidity");
-
-// global variables
-// divs
+const city_Cards = document.querySelector("#city-Cards");
+const cityArray = [];
+// date
+let d = new Date();
+let localTime = d.getTime();
+let localOffset = d.getTimezoneOffset() * 60000;
+let utc = localTime + localOffset;
+let atlanta = utc + 1000 * -14400;
+let nd = new Date(atlanta);
 
 // functions
 function init() {
@@ -25,6 +33,8 @@ function init() {
 function citySearch(event) {
   event.preventDefault();
   let city = document.querySelector("#cityInput").value;
+  cityArray.push(city);
+  localStorage.setItem("Searched Cities", cityArray);
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=049980ce88447ba2a5760c6844c0482d`;
   fetch(weatherApiUrl)
     .then(function (response) {
@@ -42,6 +52,41 @@ function citySearch(event) {
 
       // City name date weather conditions, temperature, humidity, wind speed
       // data goes in here, make a loop function or summin
+      for (const element of data.list) {
+        let dateText = element.dt_txt.split(" ")[1];
+        // console.log(dateText);
+        let weatherCardImg = element.weather[0].icon;
+        if (dateText === "00:00:00") {
+          let cardDiv = document.createElement("div");
+          cardDiv.setAttribute("class", "cardDiv border-4 p-3 px-9 mx-auto");
+          city_Cards.appendChild(cardDiv);
+          let firstCardDiv = document.querySelector(".cardDiv");
+          let futureDate = document.createElement("h2");
+          futureDate.innerHTML = `${element.dt_txt.split(" ")[0]}`;
+          futureDate.setAttribute("class", "text-base");
+          firstCardDiv.appendChild(futureDate);
+          let futureWeather = document.createElement("img");
+          futureWeather.setAttribute("src", `https://openweathermap.org/img/wn/${weatherCardImg}@2x.png`);
+          firstCardDiv.appendChild(futureWeather);
+          let twhDiv = document.createElement("div");
+          twhDiv.setAttribute("class", "twhDiv grid gap-4 grid-cols-3 grid-rows-1 m-2");
+          firstCardDiv.appendChild(twhDiv);
+          let secondCardDiv = document.querySelector(".twhDiv");
+          let futureTemp = document.createElement("h3");
+          futureTemp.innerHTML = `Temperature: ${element.main.temp}°F`;
+          futureTemp.setAttribute("class", "text-xl");
+          secondCardDiv.appendChild(futureTemp);
+          let futureWind = document.createElement("h3");
+          futureWind.innerHTML = `Wind Speed: ${element.wind.speed} MPH`;
+          futureWind.setAttribute("class", "text-xl");
+          secondCardDiv.appendChild(futureWind);
+          let futureHumidity = document.createElement("h3");
+          futureHumidity.innerHTML = `Humidity: ${element.main.humidity}%`;
+          futureHumidity.setAttribute("class", "text-xl");
+          secondCardDiv.appendChild(futureHumidity);
+          console.log("this didnt work");
+        }
+      }
     });
 }
 
