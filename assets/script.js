@@ -2,7 +2,6 @@ const apiKey = "049980ce88447ba2a5760c6844c0482d";
 // global variables
 // divs
 const searchBtn = document.querySelector("#searchBtn");
-const pastSearches = document.querySelector("#pastSearches");
 const city_Div = document.querySelector("#city-Div");
 const city_Name = document.querySelector("#city-Name");
 const city_Date = document.querySelector("#city-Date");
@@ -12,6 +11,7 @@ const city_Wind = document.querySelector("#city-Wind");
 const city_Humidity = document.querySelector("#city-Humidity");
 const city_Cards = document.querySelector("#city-Cards");
 const searchBar = document.querySelector("#cityInput");
+const searchHistory = document.querySelector("#searchHistory");
 let cityArray = [];
 let city = "";
 // date
@@ -31,6 +31,7 @@ function init() {
   }
   city = cityArray[0];
   citySearch();
+  searchAppend();
   // grab last search results from local storage and put them on page
 }
 
@@ -40,11 +41,33 @@ function newSearch(event) {
   city = searchBar.value;
   cityArray.unshift(city);
   localStorage.setItem("cityArray", JSON.stringify(cityArray));
-
+  searchBar.value = "";
+  searchAppend();
   citySearch();
 }
 
-function searchHistory() {}
+function searchAppend() {
+  let newCityArray = cityArray.filter((item, index) => cityArray.indexOf(item) === index);
+
+  newCityArray.forEach((city) => {
+    let searchList = document.createElement("li");
+    let fakeButtons = document.createElement("a");
+    searchList.setAttribute("class", "border-2 m-2 p-2 pl-4");
+    fakeButtons.setAttribute("href", "#");
+    fakeButtons.innerHTML = city;
+    searchHistory.appendChild(searchList);
+    searchList.append(fakeButtons);
+  });
+}
+
+function historySearch(event) {
+  let oldSearch = event.target.innerHTML;
+  let element = event.target;
+  if (element.matches("a")) {
+    city = oldSearch;
+    citySearch();
+  }
+}
 
 // Main fetch Function
 function citySearch() {
@@ -111,3 +134,4 @@ init();
 // search button event listener
 searchBtn.addEventListener("click", newSearch);
 // past search event listener
+searchHistory.addEventListener("click", historySearch);
