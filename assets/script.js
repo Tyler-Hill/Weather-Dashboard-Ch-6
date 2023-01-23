@@ -52,39 +52,43 @@ function citySearch(event) {
 
       // City name date weather conditions, temperature, humidity, wind speed
       // data goes in here, make a loop function or summin
+      let index = 1;
       for (const element of data.list) {
         let dateText = element.dt_txt.split(" ")[1];
         // console.log(dateText);
         let weatherCardImg = element.weather[0].icon;
         if (dateText === "00:00:00") {
           let cardDiv = document.createElement("div");
-          cardDiv.setAttribute("class", "cardDiv border-4 p-3 px-9 mx-auto");
+          cardDiv.setAttribute("class", `cardDiv${index} border-4 p-3 px-9 mx-auto inline`);
           city_Cards.appendChild(cardDiv);
-          let firstCardDiv = document.querySelector(".cardDiv");
+          let firstCardDiv = document.querySelector(`.cardDiv${index}`);
           let futureDate = document.createElement("h2");
           futureDate.innerHTML = `${element.dt_txt.split(" ")[0]}`;
           futureDate.setAttribute("class", "text-base");
           firstCardDiv.appendChild(futureDate);
           let futureWeather = document.createElement("img");
           futureWeather.setAttribute("src", `https://openweathermap.org/img/wn/${weatherCardImg}@2x.png`);
+          futureWeather.setAttribute("class", "inline");
           firstCardDiv.appendChild(futureWeather);
           let twhDiv = document.createElement("div");
-          twhDiv.setAttribute("class", "twhDiv grid gap-4 grid-cols-3 grid-rows-1 m-2");
+          twhDiv.setAttribute("class", `twhDiv${index} grid gap-4 grid-cols-1 grid-rows-3 m-2`);
           firstCardDiv.appendChild(twhDiv);
-          let secondCardDiv = document.querySelector(".twhDiv");
+          let secondCardDiv = document.querySelector(`.twhDiv${index}`);
           let futureTemp = document.createElement("h3");
           futureTemp.innerHTML = `Temperature: ${element.main.temp}°F`;
-          futureTemp.setAttribute("class", "text-xl");
+          futureTemp.setAttribute("class", "text-base");
           secondCardDiv.appendChild(futureTemp);
           let futureWind = document.createElement("h3");
           futureWind.innerHTML = `Wind Speed: ${element.wind.speed} MPH`;
-          futureWind.setAttribute("class", "text-xl");
+          futureWind.setAttribute("class", "text-base");
           secondCardDiv.appendChild(futureWind);
           let futureHumidity = document.createElement("h3");
           futureHumidity.innerHTML = `Humidity: ${element.main.humidity}%`;
-          futureHumidity.setAttribute("class", "text-xl");
+          futureHumidity.setAttribute("class", "text-base");
           secondCardDiv.appendChild(futureHumidity);
           console.log("this didnt work");
+          index++;
+          console.log(index);
         }
       }
     });
