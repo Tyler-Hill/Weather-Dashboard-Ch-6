@@ -9,30 +9,37 @@
     <title>Weather Dashboard</title>
 </head>
 
-<body>
-    <header class="text-center m-2 border-4 p-8">
+<body class="bg-gradient-to-r from-slate-900 to-blue-800">
+    <header
+        class="text-slate-200 text-center font-bold m-2 border-double border-4 rounded-lg p-8 bg-gradient-to-r from-blue-500 to-blue-900">
         <!-- dashboard header -->
         <h1 class="text-4xl">Tyler's Thrilling Temperature Teller</h1>
     </header>
     <!-- City search feature -->
     <div class="flex justify-evenly text-center">
-        <div class="m-2 w-1/3 mx-auto">
+        <div class="m-2 w-1/3 mx-auto text-slate-200">
             <h2 class="text-lg font-bold p-2">Enter City:</h2>
             <form id="cityForm">
-                <input class="border-4 p-1" type="text" placeholder="Chicago..." id="cityInput" />
-                <button id="searchBtn" class="border-4 p-1">Search</button>
+                <input
+                    class="border-double border-4 rounded-l-lg p-1 bg-slate-800 hover:bg-slate-700 focus-visible:bg-slate-600"
+                    type="text" placeholder="Chicago, IL, US..." id="cityInput" />
+                <button id="searchBtn" class="border-double border-4 rounded-r-lg
+                p-1 bg-blue-500 hover:bg-white shadow-lg font-bold">Search</button>
             </form>
+            <div id="tryAgain"></div>
             <div>
                 <h4 class="text-lg pt-4 underline underline-offset-8">Past Searches:</h4>
                 <!-- Last 10 searches -->
                 <ul id="searchHistory" class="list-style:none font-bold text-base text-start"></ul>
+                <div id="clearSearch"></div>
             </div>
         </div>
 
 
         <!-- Current city -->
         <div class="w-2/3">
-            <div id="cityDiv" class="flex flex-col grid justify-items-center m-2 text-center border-4 p-3">
+            <div id="cityDiv"
+                class="flex flex-col grid justify-items-center m-2 text-center border-double border-4 rounded-lg p-3 shadow-lg shadow-slate-500/40 bg-blue-300 text-slate-800">
                 <h2 id="city-Name" class="text-3xl font-bold"></h2>
                 <h4 id="city-Date" class="text-lg"></h4>
                 <img id="city-Weather" class="" alt=""></img>

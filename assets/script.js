@@ -12,6 +12,7 @@ const city_Humidity = document.querySelector("#city-Humidity");
 const city_Cards = document.querySelector("#city-Cards");
 const searchBar = document.querySelector("#cityInput");
 const searchHistory = document.querySelector("#searchHistory");
+let a = 0;
 let cityArray = [];
 let city = "";
 // date
@@ -33,14 +34,11 @@ function init() {
   let newCityArray = cityArray.filter((item, index) => cityArray.indexOf(item) === index);
   newCityArray.forEach((city) => {
     let searchList = document.createElement("li");
-    let fakeButtons = document.createElement("a");
-    searchList.setAttribute("class", "border-2 m-2 p-2 pl-4");
-    fakeButtons.setAttribute("href", "#");
-    fakeButtons.innerHTML = city;
+    searchList.setAttribute("class", "border-double border-2 rounded-lg m-2 p-2 pl-4 shadow-lg bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-violet-300");
+    searchList.innerHTML = city.charAt(0).toUpperCase() + city.slice(1);
     searchHistory.appendChild(searchList);
-    searchList.append(fakeButtons);
   });
-  city = cityArray[0];
+  city = "Chicago";
   citySearch();
   // grab last search results from local storage and put them on page
 }
@@ -49,10 +47,6 @@ function init() {
 function newSearch(event) {
   event.preventDefault();
   city = searchBar.value;
-  cityArray.unshift(city);
-  localStorage.setItem("cityArray", JSON.stringify(cityArray));
-  searchBar.value = "";
-  searchAppend();
   citySearch();
 }
 
@@ -65,12 +59,9 @@ function searchAppend() {
   });
   if (no === 1) {
     let searchList = document.createElement("li");
-    let fakeButtons = document.createElement("a");
-    searchList.setAttribute("class", "border-2 m-2 p-2 pl-4");
-    fakeButtons.setAttribute("href", "#");
-    fakeButtons.innerHTML = city;
+    searchList.setAttribute("class", "border-double border-2 rounded-lg m-2 p-2 pl-4 shadow-lg bg-blue-500 hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring focus:ring-violet-300");
+    searchList.innerHTML = city.charAt(0).toUpperCase() + city.slice(1);
     searchHistory.insertBefore(searchList, searchHistory.firstChild);
-    searchList.append(fakeButtons);
     no++;
   }
 }
@@ -78,7 +69,7 @@ function searchAppend() {
 function historySearch(event) {
   let oldSearch = event.target.innerHTML;
   let element = event.target;
-  if (element.matches("a")) {
+  if (element.matches("li")) {
     city = oldSearch;
     citySearch();
   }
@@ -86,24 +77,31 @@ function historySearch(event) {
 
 // Main fetch Function
 function citySearch() {
+  tryAgain.innerHTML = "";
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=049980ce88447ba2a5760c6844c0482d`;
   fetch(weatherApiUrl)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
+      if (data.cod === "404") {
+        let tryAgain = document.createElement("h4");
+        tryAgain.innerHTML = "Unable to find city, please try another location";
+        tryAgain.setAttribute("class", "font-bold txt-large text-slate-200 p-4");
+        let tryAgainDiv = document.querySelector("#tryAgain");
+        tryAgainDiv.appendChild(tryAgain);
+        return;
+      }
       city_Name.innerHTML = data.city.name;
       let weatherImg = data.list[0].weather[0].icon;
       city_Weather.setAttribute("src", `https://openweathermap.org/img/wn/${weatherImg}@2x.png`);
       city_Temp.innerHTML = `Temperature: ${data.list[0].main.temp}°F`;
       city_Wind.innerHTML = `Wind Speed: ${data.list[0].wind.speed} MPH`;
       city_Humidity.innerHTML = `Humidity: ${data.list[0].main.humidity}%`;
-
       city_Cards.innerHTML = "";
       let index = 1;
       for (const element of data.list) {
         let dateText = element.dt_txt.split(" ")[1];
-        // Consider re-formatting of date
         let weatherCardImg = element.weather[0].icon;
         if (dateText === "00:00:00") {
           // element creation
@@ -115,11 +113,11 @@ function citySearch() {
           let futureWind = document.createElement("h3");
           let futureHumidity = document.createElement("h3");
           //Setting attributes & appending
-          cardDiv.setAttribute("class", `cardDiv${index} border-4 p-3 px-9 mx-auto inline`);
+          cardDiv.setAttribute("class", `cardDiv${index} border-double border-4 rounded-lg p-3 px-9 mx-auto inline shadow-lg shadow-slate-500/40 bg-blue-300 text-slate-800`);
           city_Cards.appendChild(cardDiv);
           let firstCardDiv = document.querySelector(`.cardDiv${index}`);
           futureDate.innerHTML = `${element.dt_txt.split(" ")[0]}`;
-          futureDate.setAttribute("class", "text-base");
+          futureDate.setAttribute("class", "text-base font-bold underline underline-offset-4");
           firstCardDiv.appendChild(futureDate);
           futureWeather.setAttribute("src", `https://openweathermap.org/img/wn/${weatherCardImg}@2x.png`);
           futureWeather.setAttribute("class", "inline");
@@ -140,6 +138,10 @@ function citySearch() {
           index++;
         }
       }
+      cityArray.unshift(city);
+      localStorage.setItem("cityArray", JSON.stringify(cityArray));
+      searchBar.value = "";
+      searchAppend();
     });
 }
 
