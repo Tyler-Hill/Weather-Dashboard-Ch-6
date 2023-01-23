@@ -29,9 +29,19 @@ function init() {
   if (initCities !== null) {
     cityArray = initCities;
   }
+  // appending searches to past search section
+  let newCityArray = cityArray.filter((item, index) => cityArray.indexOf(item) === index);
+  newCityArray.forEach((city) => {
+    let searchList = document.createElement("li");
+    let fakeButtons = document.createElement("a");
+    searchList.setAttribute("class", "border-2 m-2 p-2 pl-4");
+    fakeButtons.setAttribute("href", "#");
+    fakeButtons.innerHTML = city;
+    searchHistory.appendChild(searchList);
+    searchList.append(fakeButtons);
+  });
   city = cityArray[0];
   citySearch();
-  searchAppend();
   // grab last search results from local storage and put them on page
 }
 
@@ -47,17 +57,22 @@ function newSearch(event) {
 }
 
 function searchAppend() {
-  let newCityArray = cityArray.filter((item, index) => cityArray.indexOf(item) === index);
-
-  newCityArray.forEach((city) => {
+  let no = 0;
+  cityArray.forEach((element) => {
+    if (element == city) {
+      no++;
+    }
+  });
+  if (no === 1) {
     let searchList = document.createElement("li");
     let fakeButtons = document.createElement("a");
     searchList.setAttribute("class", "border-2 m-2 p-2 pl-4");
     fakeButtons.setAttribute("href", "#");
     fakeButtons.innerHTML = city;
-    searchHistory.appendChild(searchList);
+    searchHistory.insertBefore(searchList, searchHistory.firstChild);
     searchList.append(fakeButtons);
-  });
+    no++;
+  }
 }
 
 function historySearch(event) {
